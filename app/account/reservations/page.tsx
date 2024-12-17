@@ -4,9 +4,22 @@ export const metadata = {
   title: "Reservations",
 };
 
+type Booking = {
+  id: string;
+  guest_id: string;
+  start_date: Date;
+  end_date: Date;
+  num_nights: number;
+  total_price: number;
+  num_guests: number;
+  status: boolean;
+  created_at: Date;
+  cabins: { name: string; image: string };
+};
+
 const Page: React.FC = () => {
   // CHANGE
-  const bookings = [];
+  const bookings: Booking[] = [];
 
   return (
     <div>

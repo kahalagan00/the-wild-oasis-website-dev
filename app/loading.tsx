@@ -1,5 +1,7 @@
+import Spinner from "@/app/_components/Spinner";
+
 const Loading: React.FC = () => {
-  return <p>LOADING DATA...</p>;
+  return <Spinner />;
 };
 
 export default Loading;
