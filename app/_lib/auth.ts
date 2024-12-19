@@ -31,8 +31,8 @@ const authConfig = {
   callbacks: {
     authorized({
       auth,
-      request,
-    }: {
+    }: // request,
+    {
       auth: Session | null;
       request: NextRequest;
     }) {
@@ -51,7 +51,7 @@ const authConfig = {
         return false;
       }
     },
-    async session({ session, user }: { session: Session; user: User }) {
+    async session({ session }: { session: Session }) {
       if (session.user) {
         const guest = await getGuest(session.user?.email);
         session.user.guestId = guest.id;

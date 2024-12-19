@@ -13,7 +13,7 @@ const Page: React.FC = async () => {
 
   // CHANGE
   // const countryFlag = "pt.jpg";
-  const nationality = "portugal";
+  // const nationality = "portugal";
 
   return (
     <div>
