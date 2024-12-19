@@ -2,7 +2,7 @@
 
 import { useOptimistic } from "react";
 import ReservationCard from "./ReservationCard";
-import { deleteReservation } from "../_lib/actions";
+import { deleteBooking } from "../_lib/actions";
 
 //JMARDEBUG: Type issue, fix later
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -20,7 +20,7 @@ const ReservationList = ({ bookings }) => {
 
   const handleDelete = async (bookingId: string) => {
     optimisticDelete(bookingId);
-    await deleteReservation(bookingId);
+    await deleteBooking(bookingId);
   };
 
   return (

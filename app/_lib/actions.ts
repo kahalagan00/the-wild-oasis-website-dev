@@ -47,11 +47,49 @@ export const updateGuest = async (formData: FormData) => {
   revalidatePath("/account/profile");
 };
 
-export const deleteReservation = async (bookingId: string) => {
-  // For testing
-  await new Promise((res) => setTimeout(res, 2000));
-  throw new Error();
+export const createBooking = async (
+  bookingData: object,
+  formData: FormData
+) => {
+  const session = await auth();
+  if (!session) {
+    throw new Error("You must be logged in");
+  }
 
+  Object.entries(formData.entries());
+
+  const newBooking = {
+    ...bookingData,
+    guest_id: session.user.guestId,
+    num_guests: Number(formData.get("numGuests")),
+    observations: formData.get("observations")?.slice(0, 1000),
+    extras_price: 0,
+    //JMARDEBUG: Type issue, fix later
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    total_price: bookingData.cabinPrice,
+    is_paid: false,
+    has_breakfast: false,
+    status: "unconfirmed",
+  };
+
+  console.log(newBooking);
+
+  const { error } = await supabase.from("bookings").insert([newBooking]);
+
+  if (error) {
+    throw new Error("Booking could not be created");
+  }
+
+  //JMARDEBUG: Type issue, fix later
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  revalidatePath(`/cabins/${bookingData.cabinId}`);
+
+  redirect("/cabins/thankyou");
+};
+
+export const deleteBooking = async (bookingId: string) => {
   const session = await auth();
   if (!session) {
     throw new Error("You must be logged in");
