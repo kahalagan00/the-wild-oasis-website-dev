@@ -15,10 +15,10 @@ type SearchParams = {
 };
 
 const Page = ({ searchParams }: { searchParams: SearchParams }) => {
-  console.log(searchParams);
+  // console.log(searchParams);
 
   const filter = searchParams?.capacity ?? "all";
-  console.log(filter);
+  // console.log(filter);
 
   return (
     <div>

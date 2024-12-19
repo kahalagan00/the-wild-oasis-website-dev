@@ -1,18 +1,42 @@
 "use client";
 
-// import { useState } from "react";
+import { useState } from "react";
+import { updateGuest } from "../_lib/actions";
+import SubmitButton from "./SubmitButton";
 
-const UpdateProfileForm = ({ children }: { children: React.ReactNode }) => {
-  // const [count, setCount] = useState();
-  const countryFlag = "pt.jpg";
-  // const nationality = "portugal";
+const UpdateProfileForm = ({
+  guest,
+  children,
+}: {
+  guest: {
+    full_name: string;
+    email: string;
+    nationality: string;
+    national_id: string;
+    country_flag: string;
+  };
+  children: React.ReactNode;
+}) => {
+  const [count, setCount] = useState();
+  const {
+    full_name: fullName,
+    email,
+    nationality,
+    national_id: nationalID,
+    country_flag: countryFlag,
+  } = guest;
 
   return (
-    <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
+    <form
+      action={updateGuest}
+      className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
+    >
       <div className="space-y-2">
         <label>Full name</label>
         <input
+          name="full_name"
           disabled
+          defaultValue={fullName}
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
       </div>
@@ -20,7 +44,9 @@ const UpdateProfileForm = ({ children }: { children: React.ReactNode }) => {
       <div className="space-y-2">
         <label>Email address</label>
         <input
+          name="email"
           disabled
+          defaultValue={email}
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
         />
       </div>
@@ -41,15 +67,14 @@ const UpdateProfileForm = ({ children }: { children: React.ReactNode }) => {
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
         <input
-          name="nationalID"
+          defaultValue={nationalID}
+          name="national_id"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
         />
       </div>
 
       <div className="flex justify-end items-center gap-6">
-        <button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
-          Update profile
-        </button>
+        <SubmitButton pendingLabel="Updating...">Update profile</SubmitButton>
       </div>
     </form>
   );

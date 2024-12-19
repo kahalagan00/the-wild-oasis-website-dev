@@ -1,25 +1,28 @@
 import ReservationCard from "@/app/_components/ReservationCard";
+import { auth } from "@/app/_lib/auth";
+import { getBookings } from "@/app/_lib/data-service";
 
 export const metadata = {
   title: "Reservations",
 };
 
-type Booking = {
-  id: string;
-  guest_id: string;
-  start_date: Date;
-  end_date: Date;
-  num_nights: number;
-  total_price: number;
-  num_guests: number;
-  status: boolean;
-  created_at: Date;
-  cabins: { name: string; image: string };
-};
+// type Booking = {
+//   id: string;
+//   guest_id: number;
+//   start_date: Date;
+//   end_date: Date;
+//   num_nights: number;
+//   total_price: number;
+//   num_guests: number;
+//   status: boolean;
+//   created_at: Date;
+//   cabins: { name: string; image: string };
+// };
 
-const Page: React.FC = () => {
+const Page: React.FC = async () => {
   // CHANGE
-  const bookings: Booking[] = [];
+  const session = await auth();
+  const bookings = await getBookings(session?.user.guestId);
 
   return (
     <div>
@@ -33,6 +36,8 @@ const Page: React.FC = () => {
       ) : (
         <ul className="space-y-6">
           {bookings.map((booking) => (
+            //JMARDEBUG: Type issue, fix later
+            // @ts-ignore
             <ReservationCard booking={booking} key={booking.id} />
           ))}
         </ul>

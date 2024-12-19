@@ -7,7 +7,7 @@ export const metadata = {
 const page: React.FC = async () => {
   const session = await auth();
 
-  console.log(session);
+  // console.log(session);
 
   const firstName = session?.user?.name?.split(" ").at(0);
 
