@@ -35,7 +35,7 @@ export const updateGuest = async (formData: FormData) => {
     national_id: nationalID,
   };
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("guests")
     .update(updateData)
     .eq("id", session.user.guestId);
@@ -48,6 +48,10 @@ export const updateGuest = async (formData: FormData) => {
 };
 
 export const deleteReservation = async (bookingId: string) => {
+  // For testing
+  await new Promise((res) => setTimeout(res, 2000));
+  throw new Error();
+
   const session = await auth();
   if (!session) {
     throw new Error("You must be logged in");

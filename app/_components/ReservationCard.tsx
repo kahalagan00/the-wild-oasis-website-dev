@@ -22,21 +22,27 @@ type Booking = {
   cabins: { name: string; image: string };
 };
 
-const ReservationCard = ({ booking }: { booking: Booking }) => {
+const ReservationCard = ({
+  booking,
+  onDelete,
+}: {
+  booking: Booking;
+  onDelete: (bookingId: string) => void;
+}) => {
   const {
     id,
-    guest_id: guestId,
+    // guest_id: guestId,
     start_date: startDate,
     end_date: endDate,
     num_nights: numNights,
     total_price: totalPrice,
     num_guests: numGuests,
-    status,
+    // status,
     created_at,
     cabins: { name, image },
   } = booking;
 
-  console.log(booking);
+  // console.log(booking);
 
   return (
     <div className="flex border border-primary-800">
@@ -95,7 +101,7 @@ const ReservationCard = ({ booking }: { booking: Booking }) => {
               <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
               <span className="mt-1">Edit</span>
             </Link>
-            <DeleteReservation bookingId={id} />
+            <DeleteReservation bookingId={id} onDelete={onDelete} />
           </>
         ) : null}
       </div>
